@@ -4,6 +4,7 @@ require("dotenv").config();
 require("express-async-errors");
 const cors = require("cors");
 const router = require("./routes/jobsRoute");
+const userRouter = require("./routes/userRoute");
 const notFound = require("./middleware/notFound");
 const errorHandler = require("./middleware/errorHandler");
 
@@ -15,6 +16,7 @@ app.use(cors());
 
 // Routes
 app.use("/api/v1/jobs", router);
+app.use("/api/v1/users", userRouter);
 
 //middleware
 app.use(notFound);
