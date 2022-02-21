@@ -2,12 +2,18 @@ const Job = require("../models/jobsModel");
 const { NotFoundError, BadRequest } = require("../errors");
 
 const createJob = async (req, res) => {
-  const job = await Job.create(req.body);
+  const jobBody = {
+    ...req.body,
+    owner: req.user._id,
+  };
+  const job = await Job.create(jobBody);
   res.json({ job });
 };
 
 const getAlljobs = async (req, res) => {
-  const jobs = await Job.find({});
+  const jobs = await Job.find({
+    owner: req.user._id,
+  });
   if (!jobs) {
     throw Error("No Jobs created yet");
   }

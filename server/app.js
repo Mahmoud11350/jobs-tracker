@@ -3,7 +3,8 @@ const connectDB = require("./db/connectDB");
 require("dotenv").config();
 require("express-async-errors");
 const cors = require("cors");
-const router = require("./routes/jobsRoute");
+const auth = require("./middleware/auth");
+const jobRouter = require("./routes/jobsRoute");
 const userRouter = require("./routes/userRoute");
 const notFound = require("./middleware/notFound");
 const errorHandler = require("./middleware/errorHandler");
@@ -15,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 
 // Routes
-app.use("/api/v1/jobs", router);
+app.use("/api/v1/jobs", auth, jobRouter);
 app.use("/api/v1/users", userRouter);
 
 //middleware

@@ -55,7 +55,9 @@ userSchema.statics.loginWithCredintails = async function (email, password) {
 userSchema.methods.getAuthToken = async function () {
   const user = this;
   const token = jwt.sign({ _id: user._id }, process.env.SECRET_TOKEN);
-  user.tokens = user.tokens.push({ token });
+  user.tokens = user.tokens.concat({ token });
+  user.save();
+  console.log(user.tokens);
   return token;
 };
 

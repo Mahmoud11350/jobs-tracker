@@ -1,7 +1,9 @@
 const User = require("../models/userModel");
+
 const newUser = async (req, res) => {
   const user = await User.create(req.body);
-  res.status(200).json({ user });
+  const token = await user.getAuthToken();
+  res.status(200).json({ user, token });
 };
 
 const loginUser = async (req, res) => {
@@ -11,7 +13,11 @@ const loginUser = async (req, res) => {
   res.status(201).json({ user, token });
 };
 const logoutUser = async (req, res) => {
-  res.send("Logout User");
+  req.user.tokens = req.user.tokens.filter(
+    (token) => token.token !== req.token
+  );
+  await req.user.save();
+  res.status(200).json("user Loged out ");
 };
 
 module.exports = {

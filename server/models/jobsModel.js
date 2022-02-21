@@ -13,6 +13,10 @@ const jobSchema = new mongoose.Schema({
     type: String,
     default: "pending",
   },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: [true, "Owner name must be provided"],
+  },
 });
 
 module.exports = mongoose.model("Job", jobSchema);
