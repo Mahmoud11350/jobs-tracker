@@ -63,6 +63,22 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  const newUser = async (userBody) => {
+    try {
+      const { data } = await Axios.post('/users/new', userBody)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const userLogin = async (userBody) => {
+    try {
+      const { data } = await Axios.post('/users/login', userBody)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -73,6 +89,8 @@ const AppProvider = ({ children }) => {
         editJob,
         job,
         getJob,
+        newUser,
+        userLogin,
       }}
     >
       {children}
