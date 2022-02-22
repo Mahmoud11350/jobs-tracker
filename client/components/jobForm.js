@@ -2,7 +2,7 @@ import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { GlobalContext } from '../context/appContext'
 function JobForm({ buttonType, jobId }) {
-  const { newJob, allJobs, editJob, job } = GlobalContext()
+  const { newJob, editJob, job } = GlobalContext()
   const jobForm = ['company', 'position']
   console.log(job)
   const formSchema = {
@@ -63,7 +63,6 @@ function JobForm({ buttonType, jobId }) {
           </Form>
         )}
       </Formik>
-      <button onClick={allJobs}>GET</button>
     </div>
   )
 }

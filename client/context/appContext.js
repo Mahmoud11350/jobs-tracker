@@ -1,4 +1,4 @@
-import { useContext, createContext, useState } from 'react'
+import { useContext, createContext, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 
@@ -10,15 +10,57 @@ const AppProvider = ({ children }) => {
     company: '',
     position: '',
   })
+  const [token, setToken] = useState(null)
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setToken(localStorage.getItem('token'))
+    }
+  }, [token])
   const Router = useRouter()
 
   // Setup Base Axios Route
   const Axios = axios.create({
     baseURL: 'http://localhost:5000/api/v1',
   })
+  // Manage Request
+  Axios.interceptors.request.use(
+    (config) => {
+      config.headers.common['Authorization'] = `Bearer ${token}`
+      return config
+    },
+    (error) => Promise.reject(error)
+  )
+
+  //Manage Response
+  Axios.interceptors.response.use(
+    (res) => {
+      return res
+    },
+    (error) => Promise.reject(error)
+  )
+  const storeToken = (token, user) => {
+    localStorage.setItem('token', token)
+    setToken(token)
+    setUser(user)
+    Router.replace('/dashboard')
+  }
+  const removeToken = () => {
+    localStorage.removeItem('token')
+    setToken(null)
+    Router.replace('/')
+  }
 
   // Add New Job
-  const newJob = (values) => Axios.post('/jobs', values)
+  const newJob = async (values) => {
+    try {
+      await Axios.post('/jobs', values)
+      allJobs()
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   //get All Jobs
   const allJobs = async () => {
@@ -34,6 +76,7 @@ const AppProvider = ({ children }) => {
   const deleteJob = async (jobId) => {
     try {
       await Axios.delete(`/jobs/${jobId}`)
+      allJobs()
     } catch (error) {
       console.log(error)
     }
@@ -43,6 +86,7 @@ const AppProvider = ({ children }) => {
     try {
       await Axios.patch(`/jobs/${jobId}`, values)
       setJob({ company: '', position: '' })
+      allJobs()
       Router.back()
     } catch (error) {
       console.log(error)
@@ -66,6 +110,7 @@ const AppProvider = ({ children }) => {
   const newUser = async (userBody) => {
     try {
       const { data } = await Axios.post('/users/new', userBody)
+      storeToken(data.token, data.user)
     } catch (error) {
       console.log(error)
     }
@@ -74,6 +119,15 @@ const AppProvider = ({ children }) => {
   const userLogin = async (userBody) => {
     try {
       const { data } = await Axios.post('/users/login', userBody)
+      storeToken(data.token, data.user)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const userLogout = async (userBody) => {
+    try {
+      await Axios.post('/users/logout')
+      removeToken()
     } catch (error) {
       console.log(error)
     }
@@ -91,6 +145,9 @@ const AppProvider = ({ children }) => {
         getJob,
         newUser,
         userLogin,
+        userLogout,
+        token,
+        user,
       }}
     >
       {children}

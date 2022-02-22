@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { NotFoundError, BadRequest } = require("../errors");
+const validator = require("validator");
 require("dotenv").config();
 
 const userSchema = new mongoose.Schema({
@@ -15,6 +16,11 @@ const userSchema = new mongoose.Schema({
     required: [true, "email must be provided"],
     trim: true,
     unique: true,
+    validate(email) {
+      if (!validator.isEmail(email)) {
+        throw new Error("Please Provide  Email Adress");
+      }
+    },
   },
   password: {
     type: String,
