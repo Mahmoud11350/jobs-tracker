@@ -2,13 +2,13 @@
 
 ## Used Tools
 
-1-the Project bootstraped with Next.js
-2-React Hooks
-3-Context-Api
-4-Tailwindcss
-5-Node.js
-6-Express.js
-7-Mongoose.js
+1. the Project bootstraped with Next.js
+2. React Hooks
+3. Context-Api
+4. Tailwindcss
+5. Node.js
+6. Express.js
+7. Mongoose.js
 
 ##Live Preview
 
