@@ -3,7 +3,6 @@ import { GlobalContext } from '../context/appContext'
 
 const WithAuth = (WrappedComponent) => (props) => {
   const Router = useRouter()
-  //   const { token } = GlobalContext()
   if (typeof window !== 'undefined') {
     const token = localStorage.getItem('token')
     if (!token) {

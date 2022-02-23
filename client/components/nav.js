@@ -17,7 +17,7 @@ function Nav() {
               </h1>
               <button
                 onClick={userLogout}
-                className="rounded bg-red-500 py-2 px-4 text-xl text-white transition-colors duration-300 hover:bg-red-700"
+                className="rounded border border-red-500 py-2 px-4 text-xl text-red-500 transition-colors duration-300 hover:bg-red-700 hover:text-white"
               >
                 Logout
               </button>

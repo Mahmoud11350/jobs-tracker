@@ -1,6 +1,5 @@
 import '../styles/globals.css'
 import Head from 'next/head'
-
 import Nav from '../components/nav'
 import { AppProvider } from '../context/appContext'
 import { useRouter } from 'next/router'
