@@ -11,8 +11,8 @@ function Nav() {
 
         {token && user && (
           <>
-            <div className="flex items-center space-x-4">
-              <h1 className="text-2xl font-bold capitalize text-main">
+            <div className="flex items-center space-x-1 md:space-x-4">
+              <h1 className="text-center font-bold capitalize text-main md:text-lg lg:text-xl">
                 {parsedUser.name}
               </h1>
               <button

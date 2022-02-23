@@ -1,13 +1,9 @@
-import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Home() {
   return (
     <>
-      <Head>
-        <title>Job Trackers</title>
-      </Head>
       <section className="container grid h-screen grid-cols-1 items-center justify-center gap-8 md:grid-cols-2">
         <div className="mx-auto  text-center md:w-3/4 md:text-left">
           <h1 className="text-3xl font-bold md:text-5xl">Job Tracking App</h1>
