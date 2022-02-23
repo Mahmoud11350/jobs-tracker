@@ -27,7 +27,7 @@ const AppProvider = ({ children }) => {
 
   // Setup Base Axios Route
   const Axios = axios.create({
-    baseURL: 'https://jobs-tracker1.herokuapp.com/api/v1',
+    baseURL: process.env.JOP_API,
   })
   // Manage Request
   Axios.interceptors.request.use(
