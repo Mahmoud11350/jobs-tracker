@@ -7,9 +7,9 @@ const {
   deleteJob,
 } = require("../controllers/jobs");
 
-const router = express.Router();
+const jobsRouter = express.Router();
 
-router.route("/").get(getAlljobs).post(createJob);
-router.route("/:id").get(getJob).patch(editJob).delete(deleteJob);
+jobsRouter.route("/").get(getAlljobs).post(createJob);
+jobsRouter.route("/:id").get(getJob).patch(editJob).delete(deleteJob);
 
-module.exports = router;
+module.exports = jobsRouter;

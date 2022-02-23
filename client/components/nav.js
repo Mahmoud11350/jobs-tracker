@@ -3,6 +3,7 @@ import { GlobalContext } from '../context/appContext'
 
 function Nav() {
   const { userLogout, token, user } = GlobalContext()
+  const parsedUser = JSON.parse(user)
   return (
     <nav className="container absolute left-1/2 -translate-x-1/2 pt-6">
       <div className="flex items-center justify-between">
@@ -12,7 +13,7 @@ function Nav() {
           <>
             <div className="flex items-center space-x-4">
               <h1 className="text-2xl font-bold capitalize text-main">
-                {user.name}
+                {parsedUser.name}
               </h1>
               <button
                 onClick={userLogout}

@@ -1,16 +1,17 @@
 import { GlobalContext } from '../context/appContext'
+import Spiner from './spinner'
 import Link from 'next/link'
 function Jobs() {
-  const { jobs, deleteJob } = GlobalContext()
+  const { jobs, deleteJob, loading } = GlobalContext()
 
   const jobHtml = jobs.jobs.map((job) => {
     return (
       <div
         key={job._id}
-        className="duration-400 relative cursor-pointer rounded bg-white py-4 px-4 capitalize transition-all hover:shadow-lg"
+        className="relative cursor-pointer rounded bg-white py-4 px-4 capitalize transition-all duration-700 hover:-translate-y-3 hover:shadow-lg"
       >
         <h4 className=" absolute right-0 top-0 w-fit rounded bg-main/30  px-3  py-2 text-right text-main">
-          Created At
+          {job.createdAt}
         </h4>
         <h2 className="mt-5 text-xl font-bold ">{job.position}</h2>
         <h3 className="text-zinc w-fit rounded bg-main/20 py-3 px-3">
@@ -36,9 +37,16 @@ function Jobs() {
     )
   })
   return (
-    <section className="container mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 ">
-      {jobs && jobHtml}
-    </section>
+    <>
+      <div className="mt-8">{loading && <Spiner />}</div>
+      {jobs && (
+        <>
+          <section className="container mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 ">
+            {jobHtml}
+          </section>
+        </>
+      )}
+    </>
   )
 }
 

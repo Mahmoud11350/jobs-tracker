@@ -4,7 +4,6 @@ import { GlobalContext } from '../context/appContext'
 function JobForm({ buttonType, jobId }) {
   const { newJob, editJob, job } = GlobalContext()
   const jobForm = ['company', 'position']
-  console.log(job)
   const formSchema = {
     company: Yup.string().required(),
     position: Yup.string().required(),
@@ -50,6 +49,15 @@ function JobForm({ buttonType, jobId }) {
                 />
               </div>
             ))}
+            <Field
+              as="select"
+              name="status"
+              className="mb-4 block w-full bg-sec py-2 px-4 text-lg capitalize outline-none"
+            >
+              <option value="pending">Pending</option>
+              <option value="declined">declined</option>
+              <option value="interview">interview</option>
+            </Field>
             <button
               disabled={!isValid}
               type="submit"
@@ -59,7 +67,6 @@ function JobForm({ buttonType, jobId }) {
             >
               {buttonType}
             </button>
-            {isSubmitting && <p>Loading ...</p>}
           </Form>
         )}
       </Formik>

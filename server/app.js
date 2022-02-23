@@ -16,6 +16,9 @@ app.use(express.json());
 app.use(cors());
 
 // Routes
+app.get("/", (req, res) => {
+  res.send(`<h1>JObS_TRACKER_API</h1>`);
+});
 app.use("/api/v1/jobs", auth, jobRouter);
 app.use("/api/v1/users", userRouter);
 

@@ -1,8 +1,10 @@
 import { Formik, Form, Field } from 'formik'
+import Spiner from './spinner'
 import * as Yup from 'yup'
 import { GlobalContext } from '../context/appContext'
+import Link from 'next/link'
 function UserForm({ userForm, button, title, initialValues }) {
-  const { userLogin, newUser } = GlobalContext()
+  const { userLogin, newUser, loading, error, errorMsg } = GlobalContext()
   let userSchema = {
     email: Yup.string().required(),
     password: Yup.string().required(),
@@ -54,7 +56,7 @@ function UserForm({ userForm, button, title, initialValues }) {
               </div>
             ))}
             <button
-              //   disabled={!isValid}
+              disabled={!isValid}
               type="submit"
               className={`w-full rounded bg-main py-1 text-xl  capitalize text-white transition-transform duration-300 active:-translate-y-2 ${
                 !isValid ? 'cursor-not-allowed' : ''
@@ -62,7 +64,32 @@ function UserForm({ userForm, button, title, initialValues }) {
             >
               {button}
             </button>
-            {isSubmitting && <p>Loading ...</p>}
+            {button === 'login' ? (
+              <p className="mt-3 text-center capitalize ">
+                Don't have account !{' '}
+                <Link href="/user/register">
+                  <a className="cursor-pointer font-bold text-green-600">
+                    Register
+                  </a>
+                </Link>
+              </p>
+            ) : (
+              <p className="mt-3 text-center capitalize ">
+                {' '}
+                Already have account{' '}
+                <Link href="/user/login">
+                  <a className="cursor-pointer font-bold text-green-600">
+                    login
+                  </a>
+                </Link>
+              </p>
+            )}
+            {loading && <Spiner />}
+            {error && (
+              <p className="mt-3 text-center text-lg font-bold text-red-400">
+                {errorMsg}
+              </p>
+            )}
           </Form>
         )}
       </Formik>

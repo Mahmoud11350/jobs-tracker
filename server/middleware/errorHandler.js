@@ -18,8 +18,8 @@ const errorHandler = (err, req, res, next) => {
   if (err.code && err.code === 11000) {
     customerror.msg = "Please provide Unique Email";
   }
+
   return res.status(customerror.statusCode).json({ msg: customerror.msg });
-  // return res.status(500).send(err);
 };
 
 module.exports = errorHandler;

@@ -1,0 +1,14 @@
+.job-enter {
+  opacity: 0;
+}
+.job-enter-active {
+  opacity: 1;
+  transition: opacity 400ms;
+}
+.job-exit {
+  opacity: 1;
+}
+.job-exit-active {
+  opacity: 0;
+  transition: opacity 400ms;
+}

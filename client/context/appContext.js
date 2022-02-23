@@ -9,20 +9,25 @@ const AppProvider = ({ children }) => {
   const [job, setJob] = useState({
     company: '',
     position: '',
+    status: '',
   })
   const [token, setToken] = useState(null)
   const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setToken(localStorage.getItem('token'))
+      setUser(localStorage.getItem('user'))
     }
   }, [token])
   const Router = useRouter()
 
   // Setup Base Axios Route
   const Axios = axios.create({
-    baseURL: 'http://localhost:5000/api/v1',
+    baseURL: 'https://jobs-tracker1.herokuapp.com/api/v1',
   })
   // Manage Request
   Axios.interceptors.request.use(
@@ -33,6 +38,15 @@ const AppProvider = ({ children }) => {
     (error) => Promise.reject(error)
   )
 
+  const handleRequestError = (error) => {
+    setLoading(false)
+    setError(true)
+    setErrorMsg(error.response.data.msg)
+    setTimeout(() => {
+      setError(false)
+    }, 2000)
+  }
+
   //Manage Response
   Axios.interceptors.response.use(
     (res) => {
@@ -42,7 +56,9 @@ const AppProvider = ({ children }) => {
   )
   const storeToken = (token, user) => {
     localStorage.setItem('token', token)
+    localStorage.setItem('user', JSON.stringify(user))
     setToken(token)
+
     setUser(user)
     Router.replace('/dashboard')
   }
@@ -65,8 +81,9 @@ const AppProvider = ({ children }) => {
   //get All Jobs
   const allJobs = async () => {
     try {
+      setLoading(true)
       const { data } = await Axios.get('/jobs')
-
+      setLoading(false)
       setJobs(data)
     } catch (error) {
       console.log(error)
@@ -109,19 +126,23 @@ const AppProvider = ({ children }) => {
 
   const newUser = async (userBody) => {
     try {
+      setLoading(true)
       const { data } = await Axios.post('/users/new', userBody)
       storeToken(data.token, data.user)
+      setLoading(false)
     } catch (error) {
-      console.log(error)
+      handleRequestError(error)
     }
   }
 
   const userLogin = async (userBody) => {
     try {
+      setLoading(true)
       const { data } = await Axios.post('/users/login', userBody)
       storeToken(data.token, data.user)
+      setLoading(false)
     } catch (error) {
-      console.log(error)
+      handleRequestError(error)
     }
   }
   const userLogout = async (userBody) => {
@@ -148,6 +169,9 @@ const AppProvider = ({ children }) => {
         userLogout,
         token,
         user,
+        loading,
+        error,
+        errorMsg,
       }}
     >
       {children}
