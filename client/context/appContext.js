@@ -27,7 +27,7 @@ const AppProvider = ({ children }) => {
 
   // Setup Base Axios Route
   const Axios = axios.create({
-    baseURL: process.env.JOP_API,
+    baseURL: process.env.JOB_API,
   })
   // Manage Request
   Axios.interceptors.request.use(
