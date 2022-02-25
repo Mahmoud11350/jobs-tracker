@@ -14,7 +14,7 @@
 
 ## Live Preview
 
-[job-trackers](https://jobs-tracker.vercel.app/)
+## [job-trackers](https://jobs-tracker.vercel.app/)
 
 ### Desktop View
 
