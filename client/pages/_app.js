@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import '../styles/build.css'
 import Head from 'next/head'
 import Nav from '../components/nav'
 import { AppProvider } from '../context/appContext'
