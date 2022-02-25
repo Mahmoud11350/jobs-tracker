@@ -3,7 +3,9 @@ import { Html, Head, Main, NextScript } from 'next/document'
 export default function Document() {
   return (
     <Html>
-      <Head />
+      <Head>
+        <link rel="icon shortcut" type="image/svg" href="/public/logo.svg" />
+      </Head>
       <body
         style={{
           backgroundColor: '#f0f4f8',
