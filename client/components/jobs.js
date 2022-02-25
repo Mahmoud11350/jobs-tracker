@@ -1,6 +1,7 @@
 import { GlobalContext } from '../context/appContext'
 import Spiner from './spinner'
 import Link from 'next/link'
+import moment from 'moment'
 function Jobs() {
   const { jobs, deleteJob, loading } = GlobalContext()
 
@@ -11,7 +12,7 @@ function Jobs() {
         className="relative cursor-pointer rounded bg-white py-4 px-4 capitalize transition-all duration-700 hover:-translate-y-3 hover:shadow-lg"
       >
         <h4 className=" absolute right-0 top-0 w-fit rounded bg-main/30  px-3  py-2 text-right text-main">
-          {job.createdAt}
+          {moment(job.createdAt).format('MMM Do, YYYY')}
         </h4>
         <h2 className="mt-5 text-xl font-bold ">{job.position}</h2>
         <h3 className="text-zinc w-fit rounded bg-main/20 py-3 px-3">
